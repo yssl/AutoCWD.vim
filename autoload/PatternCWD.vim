@@ -38,6 +38,14 @@ def getWinName(bufname, buftype):
 		else:
 			winname = bufname
 	return winname
+
+def ltrunc(s, width, prefix=''):
+    if width >= len(s): prefix = ''
+    return prefix+s[-width+len(prefix):]
+    
+def rtrunc(s, width, postfix=''):
+    if width >= len(s): postfix = ''
+    return s[:width-len(postfix)]+postfix
 EOF
 
 " functions
@@ -120,35 +128,43 @@ endfunction
 function! s:PrintWorkDirs()
 	let a:type = 'workdir'
 python << EOF
-vim.command('let propTypes = ["iscurwin", "winnr", "winname", a:type."_pattern", a:type]')
+vim.command('let propTypes = ["iscurwin", "winnr", "winname", "workdir_pattern", "workdir"]')
 wpMat = vim.eval('s:BuildAllWinPropMat(propTypes)')
+propTypes = vim.eval('propTypes')
 
 # build width info
-totalWidth = int(vim.eval('&columns'))
+vimWidth = int(vim.eval('&columns'))
 widthColMat = toWidthColMat(wpMat)
 
-accWidth = 0
 widths = []
 len_labels = int(vim.eval('len(propTypes)'))
+sumLongWidths = 0
 for c in range(len_labels):
-	if c < len_labels-1:
-		if c==0:	gapWidth = 0
-		else:		gapWidth = 2
-		maxColWidth = max(widthColMat[c]) + gapWidth
-		accWidth += maxColWidth
-		widths.append(maxColWidth)
-	else:
-		widths.append(totalWidth - accWidth-1)
+	if c==0:	gapWidth = 0
+	else:		gapWidth = 2
+	maxColWidth = max(widthColMat[c]) + gapWidth
+	widths.append(maxColWidth)
+
+	if propTypes[c]=='winname' or propTypes[c]=='workdir':
+		sumLongWidths += maxColWidth
+
+totalWidth = sum(widths)
+reduceWidth = totalWidth - vimWidth
+if reduceWidth > 0:
+	for c in range(len_labels):
+		if propTypes[c]=='winname' or propTypes[c]=='workdir':
+			widths[c] -= int(reduceWidth * float(widths[c])/sumLongWidths)+1
 
 # print
+prefix = '..'
 for r in range(len(wpMat)):
 	if r==0:	vim.command('echohl Title')
 	s = ''
 	for c in range(len(wpMat[0])):
-		if len(wpMat[r][c])<widths[c]:
+		if len(wpMat[r][c])<=widths[c]:
 			s += wpMat[r][c].ljust(widths[c])
 		else:
-			s += wpMat[r][c]
+			s += ltrunc(wpMat[r][c], widths[c]-2, prefix)+'  '
 	vim.command('echo \'%s\''%s)
 	if r==0:	vim.command('echohl None')
 EOF
