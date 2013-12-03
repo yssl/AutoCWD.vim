@@ -1,15 +1,15 @@
-"""""""""""""""""""""""""""""""""""""""""""""
-" template code
-" Exit when your app has already been loaded (or "compatible" mode set)
+" File:         plugin/PatternCWD.vim
+" Description:  
+" Author:       yssl <http://github.com/yssl>
+" License:      
+
 if exists("g:loaded_patterncwd") || &cp
-	"finish
+	finish
 endif
 let g:loaded_patterncwd	= 1
 let s:keepcpo           = &cpo
 set cpo&vim
- 
 """""""""""""""""""""""""""""""""""""""""""""
-" my code
 
 " global variables
 if !exists('g:patterncwd_defaultwd')
@@ -108,6 +108,5 @@ EOF
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""
-" template code
 let &cpo= s:keepcpo
 unlet s:keepcpo

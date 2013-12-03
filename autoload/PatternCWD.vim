@@ -1,3 +1,8 @@
+" File:         autoload/PatternCWD.vim
+" Description:  
+" Author:       yssl <http://github.com/yssl>
+" License:      
+"
 " wrappers
 function! PatternCWD#PrintWorkDirs()
 	call s:PrintWorkDirs()
