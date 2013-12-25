@@ -97,8 +97,7 @@ filepath = getWinName(bufname, buftype)
 patternwd_pairs = vim.eval('g:patterncwd_patternwd_pairs')
 inpatternwd = False
 for pattern, wd in patternwd_pairs:
-	if fnmatch.fnmatch(filepath, pattern):
-		pass
+	if fnmatch.fnmatch(filepath, pattern) and os.path.isdir(wd):
 		inpatternwd = True
 		vim.command('return [1, expand(\'%s\')]'%wd)
 		break

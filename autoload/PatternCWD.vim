@@ -2,7 +2,7 @@
 " Description:  
 " Author:       yssl <http://github.com/yssl>
 " License:      
-"
+
 " wrappers
 function! PatternCWD#PrintWorkDirs()
 	call s:PrintWorkDirs()
@@ -60,7 +60,7 @@ filepath = vim.eval('a:filepath')
 patternwd_pairs = vim.eval('g:patterncwd_patternwd_pairs')
 inpatternwd = False
 for pattern, wd in patternwd_pairs:
-	if fnmatch.fnmatch(filepath, pattern):
+	if fnmatch.fnmatch(filepath, pattern) and os.path.isdir(wd):
 		inpatternwd = True
 		vim.command('return expand(\'%s\')'%wd)
 		break
@@ -76,7 +76,7 @@ filepath = vim.eval('a:filepath')
 patternwd_pairs = vim.eval('g:patterncwd_patternwd_pairs')
 inpatternwd = False
 for pattern, wd in patternwd_pairs:
-	if fnmatch.fnmatch(filepath, pattern):
+	if fnmatch.fnmatch(filepath, pattern) and os.path.isdir(wd):
 		inpatternwd = True
 		vim.command('return \'%s\''%pattern)
 		break
