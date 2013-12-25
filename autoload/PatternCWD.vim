@@ -60,9 +60,10 @@ filepath = vim.eval('a:filepath')
 patternwd_pairs = vim.eval('g:patterncwd_patternwd_pairs')
 inpatternwd = False
 for pattern, wd in patternwd_pairs:
+	wd = vim.eval('expand(\'%s\')'%wd)
 	if fnmatch.fnmatch(filepath, pattern) and os.path.isdir(wd):
 		inpatternwd = True
-		vim.command('return expand(\'%s\')'%wd)
+		vim.command('return \'%s\''%wd)
 		break
 if inpatternwd==False:
 	vim.command('return g:patterncwd_defaultwd')
@@ -76,6 +77,7 @@ filepath = vim.eval('a:filepath')
 patternwd_pairs = vim.eval('g:patterncwd_patternwd_pairs')
 inpatternwd = False
 for pattern, wd in patternwd_pairs:
+	wd = vim.eval('expand(\'%s\')'%wd)
 	if fnmatch.fnmatch(filepath, pattern) and os.path.isdir(wd):
 		inpatternwd = True
 		vim.command('return \'%s\''%pattern)
