@@ -1,10 +1,10 @@
-" File:         autoload/PatternCWD.vim
+" File:         autoload/CWDPattern.vim
 " Description:  
 " Author:       yssl <http://github.com/yssl>
 " License:      
 
 " wrappers
-function! PatternCWD#PrintWorkDirs()
+function! CWDPattern#PrintWorkDirs()
 	call s:PrintWorkDirs()
 endfunction
 
@@ -57,7 +57,7 @@ EOF
 function! s:GetWorkDir(filepath)
 python << EOF
 filepath = vim.eval('a:filepath')
-patternwd_pairs = vim.eval('g:patterncwd_patternwd_pairs')
+patternwd_pairs = vim.eval('g:cwdpattern_patternwd_pairs')
 inpatternwd = False
 for pattern, wd in patternwd_pairs:
 	wd = vim.eval('expand(\'%s\')'%wd)
@@ -66,7 +66,7 @@ for pattern, wd in patternwd_pairs:
 		vim.command('return \'%s\''%wd)
 		break
 if inpatternwd==False:
-	vim.command('return g:patterncwd_defaultwd')
+	vim.command('return g:cwdpattern_defaultwd')
 EOF
 endfunction
 
@@ -74,7 +74,7 @@ function! s:GetWorkDirPattern(filepath)
 python << EOF
 import fnmatch
 filepath = vim.eval('a:filepath')
-patternwd_pairs = vim.eval('g:patterncwd_patternwd_pairs')
+patternwd_pairs = vim.eval('g:cwdpattern_patternwd_pairs')
 inpatternwd = False
 for pattern, wd in patternwd_pairs:
 	wd = vim.eval('expand(\'%s\')'%wd)
