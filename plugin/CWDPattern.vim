@@ -1,5 +1,5 @@
 " File:         plugin/CWDPattern.vim
-" Description:  
+" Description:  Change CWD based on pattern in file path
 " Author:       yssl <http://github.com/yssl>
 " License:      
 
@@ -15,9 +15,9 @@ set cpo&vim
 if !exists('g:cwdpattern_defaultwd')
 	let g:cwdpattern_defaultwd = getcwd()
 endif
-if !exists('g:cwdpattern_repodirs')
-	let g:cwdpattern_repodirs = ['.git', '.hg', '.svn']
-endif
+"if !exists('g:cwdpattern_repodirs')
+	"let g:cwdpattern_repodirs = ['.git', '.hg', '.svn']
+"endif
 if !exists('g:cwdpattern_patternwd_pairs')
 	let g:cwdpattern_patternwd_pairs = []
 endif
