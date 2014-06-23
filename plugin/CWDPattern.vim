@@ -1,5 +1,5 @@
 " File:         plugin/CWDPattern.vim
-" Description:  Change CWD based on pattern in file path
+" Description:  Change CWD automatically by patterns when current window is changed.
 " Author:       yssl <http://github.com/yssl>
 " License:      
 
@@ -12,22 +12,21 @@ set cpo&vim
 """""""""""""""""""""""""""""""""""""""""""""
 
 " global variables
+if !exists('g:cwdpattern_patternwd_pairs')
+	let g:cwdpattern_patternwd_pairs = []
+endif
+if !exists('g:cwdpattern_not_update_defaultwd_for')
+	let g:cwdpattern_not_update_defaultwd_for = ['ControlP']
+endif
 if !exists('g:cwdpattern_defaultwd')
 	let g:cwdpattern_defaultwd = getcwd()
 endif
 "if !exists('g:cwdpattern_repodirs')
 	"let g:cwdpattern_repodirs = ['.git', '.hg', '.svn']
 "endif
-if !exists('g:cwdpattern_patternwd_pairs')
-	let g:cwdpattern_patternwd_pairs = []
-endif
-if !exists('g:cwdpattern_noupdate_defaultwd_for')
-	let g:cwdpattern_noupdate_defaultwd_for = ['ControlP']
-endif
 
 " commands
-command! CWDPatternPrintWorkDirs call CWDPattern#PrintWorkDirs()
-command! PCprint call CWDPattern#PrintWorkDirs()
+command! CWDPatternPrint call CWDPattern#PrintWorkDirs()
 
 " autocmd
 augroup CWDPatternAutoCmds
@@ -39,7 +38,7 @@ augroup END
 " initialize python 
 python << EOF
 import vim
-import fnmatch
+import os, fnmatch
 
 def getWinName(bufname, buftype):
 	if bufname==None:
@@ -75,7 +74,7 @@ function! s:OnLeaveBuf()
 		let bufname = getcwd().'/'.bufname
 	endif
 
-	for noupdatename in g:cwdpattern_noupdate_defaultwd_for
+	for noupdatename in g:cwdpattern_not_update_defaultwd_for
 		if match(bufname, noupdatename) >= 0
 			return
 		endif

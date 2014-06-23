@@ -1,5 +1,5 @@
 " File:         autoload/CWDPattern.vim
-" Description:  
+" Description:  Change CWD automatically by patterns when current window is changed.
 " Author:       yssl <http://github.com/yssl>
 " License:      
 
