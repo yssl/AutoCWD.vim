@@ -1,0 +1,116 @@
+*CWDPattern.txt*    Change CWD automatically by patterns when you change the current buffer.
+*CWDPattern*
+
+Author:       yssl <http://github.com/yssl>
+
+==============================================================================
+Contents                                                 *CWDPattern-contents*
+
+         1. Introduction .............................. |CWDPattern-intro|
+         2. Usage ..................................... |CWDPattern-usage|
+         3. Commands .................................. |CWDPattern-commands|
+         4. Motivation ................................ |CWDPattern-arguments|
+         5. Options ................................... |CWDPattern-options|
+         6. Changelog ................................. |CWDPattern-changelog|
+
+==============================================================================
+1. Introduction                                             *CWDPattern-intro*
+
+CWDPattern automatically changes the current working directory (CWD) of vim 
+when you change the current buffer.
+You can define patterns that be may included in a name or file path of a buffer,
+and their working directories in your .vimrc. 
+The predefined working directories can be the directory of the current buffer's file,
+absolute paths of specific directories, and so on.
+
+This plugin requires a version of vim with python support.
+You can check your vim with `:echo has('python')`.
+
+==============================================================================
+2. Usage                                                    *CWDPattern-usage*
+
+You can define patterns and working directories in your .vimrc as follows:
+
+```
+let g:cwdpattern_patternwd_pairs = [
+	\[pattern1, working_directory1],
+	\[pattern2, working_directory2],
+	...
+	\]
+```
+
+- *pattern* is a substring of a file path or buffer name with Unix shell-style wildcards.  
+For example, '\*.vim' matches files with .vim extension and '\*/project1/\*' matches 
+files that contains 'project1' in their absolute file paths.  
+(Please refer https://docs.python.org/2/library/fnmatch.html for more information.
+*patterns* are processed by python's *fnmatch* function internally.)
+
+- *working_directory* will be the CWD when the corresponding *pattern* 
+matches the current buffer.
+It can be an absolute path or a vim's filename modifier.  
+For example, '~/test' changes the CWD to ~/test directory and '%:p:h' changes the CWD 
+to the directory of the current buffer's file.  
+(Please refer http://vimdoc.sourceforge.net/htmldoc/cmdline.html#filename-modifiers for more information.)
+
+- If the current buffer matches one of the defined patterns, the CWD will 
+be changed to the corresponding working directory.
+Otherwise, the default working directory that have been the CWD before 
+applying `g:cwdpattern_patternwd_pairs` will be restored.  
+You can change the default working directory by `:cd` or other CWD-changing 
+commands (e.g., 'cd' of the NERDTree) when the current buffer does not 
+match any of predefined patterns.
+
+- The order of patterns in `g:cwdpattern_patternwd_pairs` is meaningful.
+If the current buffer matches both first and second patterns, the working 
+directory corresponding to the first pattern will be the CWD.
+
+
+==============================================================================
+3. Commands                                              *CWDPattern-commands*
+
+*:CWDPatternPrint*  
+Print the buffer name or file path, matched pattern, and working directory 
+of windows in the current tab.
+
+There is no activation commands for CWDPattern. 
+If you install this plugin, it will starts to manage the CWD.
+
+==============================================================================
+4. Motivation                                           *CWDPattern-arguments*
+
+It is quite useful to set the CWD for each opened file in vim.
+Vim provides `:lcd` command for this purpose. 
+However, it cannot deal with opening other files in the same window because `:lcd` is applied to a specific window, not buffer.  
+
+CWDPattern is designed to solve this problem.
+Moreover, it provides more convenient way to set CWDs with Unix shell-style patterns.
+
+==============================================================================
+5. Options                                                *CWDPattern-options*
+
+*g:cwdpattern_patternwd_pairs*
+A list of [pattern, working_directory] pairs.
+Default: >
+	let g:cwdpattern_patternwd_pairs = []
+<
+
+*g:cwdpattern_not_update_defaultwd_for*
+CWDPattern set the default working directory to the return value of the getcwd()
+function when you leave the current buffer.
+This behavior assumes that the change of the CWD is caused by a user action
+(e.g., :cd command).
+As this behavior does not work correctly when a window changes the CWD 
+internally (mostly for other plugin windows), this option provides a way to 
+specify such exceptional cases.
+For example, the ControlP plugin window internally changes the CWD.
+If you find such cases, please let me know to apply them as the default value
+of this option.
+Default: >
+	let g:cwdpattern_not_update_defaultwd_for = ['ControlP']
+<
+
+==============================================================================
+6. Changelog                                            *CWDPattern-changelog*
+
+1.0.0                       2014/06/24
+    - first version
