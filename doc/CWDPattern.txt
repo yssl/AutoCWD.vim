@@ -39,13 +39,13 @@ let g:cwdpattern_patternwd_pairs = [
 	\]
 ```
 
-- *pattern* is a substring of a file path or buffer name with Unix shell-style wildcards.  
+- pattern is a substring of a file path or buffer name with Unix shell-style wildcards.  
 For example, '\*.vim' matches files with .vim extension and '\*/project1/\*' matches 
 files that contains 'project1' in their absolute file paths.  
 (Please refer https://docs.python.org/2/library/fnmatch.html for more information.
-*patterns* are processed by python's *fnmatch* function internally.)
+patterns are processed by python's *fnmatch* function internally.)
 
-- *working_directory* will be the CWD when the corresponding *pattern* 
+- working_directory will be the CWD when the corresponding pattern
 matches the current buffer.
 It can be an absolute path or a vim's filename modifier.  
 For example, '~/test' changes the CWD to ~/test directory and '%:p:h' changes the CWD 
