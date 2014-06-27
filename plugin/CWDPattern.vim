@@ -1,5 +1,5 @@
 " File:         plugin/CWDPattern.vim
-" Description:  Change CWD automatically by patterns when you change the current buffer.
+" Description:  Automatically changes CWD depending on patterns in file path of current buffer.
 " Author:       yssl <http://github.com/yssl>
 " License:      
 
