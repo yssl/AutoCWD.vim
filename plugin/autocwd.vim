@@ -1,35 +1,35 @@
-" File:         plugin/CWDPattern.vim
-" Description:  Automatically changes CWD depending on patterns in file path of current buffer.
+" File:         plugin/autocwd.vim
+" Description:  Auto current working directory update system
 " Author:       yssl <http://github.com/yssl>
 " License:      
 
-if exists("g:loaded_cwdpattern") || &cp
+if exists("g:loaded_autocwd") || &cp
 	finish
 endif
-let g:loaded_cwdpattern	= 1
+let g:loaded_autocwd	= 1
 let s:keepcpo           = &cpo
 set cpo&vim
 """""""""""""""""""""""""""""""""""""""""""""
 
 " global variables
-if !exists('g:cwdpattern_patternwd_pairs')
-	let g:cwdpattern_patternwd_pairs = []
+if !exists('g:autocwd_patternwd_pairs')
+	let g:autocwd_patternwd_pairs = []
 endif
-if !exists('g:cwdpattern_not_update_defaultwd_for')
-	let g:cwdpattern_not_update_defaultwd_for = ['ControlP']
+if !exists('g:autocwd_not_update_defaultwd_for')
+	let g:autocwd_not_update_defaultwd_for = ['ControlP']
 endif
-if !exists('g:cwdpattern_defaultwd')
-	let g:cwdpattern_defaultwd = getcwd()
+if !exists('g:autocwd_defaultwd')
+	let g:autocwd_defaultwd = getcwd()
 endif
-"if !exists('g:cwdpattern_repodirs')
-	"let g:cwdpattern_repodirs = ['.git', '.hg', '.svn']
+"if !exists('g:autocwd_repodirs')
+	"let g:autocwd_repodirs = ['.git', '.hg', '.svn']
 "endif
 
 " commands
-command! CWDPatternPrint call CWDPattern#PrintWorkDirs()
+command! AutoCWDPrint call autocwd#PrintWorkDirs()
 
 " autocmd
-augroup CWDPatternAutoCmds
+augroup AutoCWDAutoCmds
 	autocmd!
 	autocmd BufEnter * call s:OnEnterBuf() 
 	autocmd BufLeave * call s:OnLeaveBuf() 
@@ -74,7 +74,7 @@ function! s:OnLeaveBuf()
 		let bufname = getcwd().'/'.bufname
 	endif
 
-	for noupdatename in g:cwdpattern_not_update_defaultwd_for
+	for noupdatename in g:autocwd_not_update_defaultwd_for
 		if match(bufname, noupdatename) >= 0
 			return
 		endif
@@ -84,7 +84,7 @@ function! s:OnLeaveBuf()
 
 	let exist = s:ExistPattern(bufname, buftype)[0]
 	if exist==0
-		let g:cwdpattern_defaultwd = getcwd()
+		let g:autocwd_defaultwd = getcwd()
 	endif
 endfunction
 
@@ -93,7 +93,7 @@ python << EOF
 bufname = vim.eval('a:bufname')
 buftype = vim.eval('a:buftype')
 filepath = getWinName(bufname, buftype)
-patternwd_pairs = vim.eval('g:cwdpattern_patternwd_pairs')
+patternwd_pairs = vim.eval('g:autocwd_patternwd_pairs')
 inpatternwd = False
 for pattern, wd in patternwd_pairs:
 	wd = vim.eval('expand(\'%s\')'%wd)
@@ -102,7 +102,7 @@ for pattern, wd in patternwd_pairs:
 		vim.command('return [1, \'%s\']'%wd)
 		break
 if inpatternwd==False:
-	vim.command('return [0, g:cwdpattern_defaultwd]')
+	vim.command('return [0, g:autocwd_defaultwd]')
 EOF
 endfunction
 

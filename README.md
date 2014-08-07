@@ -1,6 +1,6 @@
-# CWDPattern
+# autocwd.vim
 
-CWDPattern automatically changes the current working directory (CWD) of vim when you change the current buffer.
+autocwd.vim automatically changes the current working directory (CWD) of vim when you change the current buffer.
 You can define patterns that be may included in a name or file path of a buffer, and their working directories in your .vimrc. 
 The predefined working directories can be the directory of the current buffer's file, absolute paths of specific directories, and so on.
 
@@ -15,7 +15,7 @@ Screenshot:
 You can define patterns and working directories in your .vimrc as follows:
 
 ```
-let g:cwdpattern_patternwd_pairs = [
+let g:autocwd_patternwd_pairs = [
 	\[pattern1, working_directory1],
 	\[pattern2, working_directory2],
 	...
@@ -33,15 +33,15 @@ For example, '~/test' changes the CWD to ~/test directory and '%:p:h' changes th
 (Please refer http://vimdoc.sourceforge.net/htmldoc/cmdline.html#filename-modifiers for more information.)
 
 - If the current buffer matches one of the defined patterns, the CWD will be changed to the corresponding working directory.
-Otherwise, the default working directory that have been the CWD before applying `g:cwdpattern_patternwd_pairs` will be restored.  
+Otherwise, the default working directory that have been the CWD before applying `g:autocwd_patternwd_pairs` will be restored.  
 You can change the default working directory by `:cd` or other CWD-changing commands (e.g., 'cd' of the NERDTree) when the current buffer does not match any of predefined patterns.
 
-- The order of patterns in `g:cwdpattern_patternwd_pairs` is meaningful.
+- The order of patterns in `g:autocwd_patternwd_pairs` is meaningful.
 If the current buffer matches both first and second patterns, the working directory corresponding to the first pattern will be the CWD.
 
 An example pattern-wd pairs for the screenshot:
 ```
-let g:cwdpattern_patternwd_pairs = [
+let g:autocwd_patternwd_pairs = [
 	\['*.vim', '%:p:h'],
 	\['*.py', '%:p:h'],
 	\['*/vim74/*', '/home/testid/vim74'],
@@ -51,10 +51,10 @@ let g:cwdpattern_patternwd_pairs = [
 
 ## Commands
 
-**:CWDPatternPrint**  
+**:AutoCWDPrint**  
 Print the buffer name or file path, matched pattern, and working directory of windows in the current tab.
 
-There is no activation commands for CWDPattern. 
+There is no activation commands for autocwd.vim. 
 If you install this plugin, it will starts to manage the CWD.
 
 ## Motivation
@@ -63,5 +63,5 @@ It is quite useful to set the CWD for each opened file in vim.
 Vim provides `:lcd` command for this purpose. 
 However, it cannot deal with opening other files in the same window because `:lcd` is applied to a specific window, not buffer.  
 
-CWDPattern is designed to solve this problem.
+autocwd.vim is designed to solve this problem.
 Moreover, it provides more convenient way to set CWDs with Unix shell-style patterns.

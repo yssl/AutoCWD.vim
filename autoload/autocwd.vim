@@ -1,10 +1,10 @@
-" File:         autoload/CWDPattern.vim
-" Description:  Automatically changes CWD depending on patterns in file path of current buffer.
+" File:         autoload/autocwd.vim
+" Description:  Auto current working directory update system
 " Author:       yssl <http://github.com/yssl>
 " License:      
 
 " wrappers
-function! CWDPattern#PrintWorkDirs()
+function! autocwd#PrintWorkDirs()
 	call s:PrintWorkDirs()
 endfunction
 
@@ -57,7 +57,7 @@ EOF
 function! s:GetWorkDir(filepath)
 python << EOF
 filepath = vim.eval('a:filepath')
-patternwd_pairs = vim.eval('g:cwdpattern_patternwd_pairs')
+patternwd_pairs = vim.eval('g:autocwd_patternwd_pairs')
 inpatternwd = False
 for pattern, wd in patternwd_pairs:
 	wd = vim.eval('expand(\'%s\')'%wd)
@@ -66,7 +66,7 @@ for pattern, wd in patternwd_pairs:
 		vim.command('return \'%s\''%wd)
 		break
 if inpatternwd==False:
-	vim.command('return g:cwdpattern_defaultwd')
+	vim.command('return g:autocwd_defaultwd')
 EOF
 endfunction
 
@@ -74,7 +74,7 @@ function! s:GetWorkDirPattern(filepath)
 python << EOF
 import fnmatch
 filepath = vim.eval('a:filepath')
-patternwd_pairs = vim.eval('g:cwdpattern_patternwd_pairs')
+patternwd_pairs = vim.eval('g:autocwd_patternwd_pairs')
 inpatternwd = False
 for pattern, wd in patternwd_pairs:
 	wd = vim.eval('expand(\'%s\')'%wd)
