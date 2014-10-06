@@ -21,9 +21,9 @@ endif
 if !exists('g:autocwd_defaultwd')
 	let g:autocwd_defaultwd = getcwd()
 endif
-"if !exists('g:autocwd_repodirs')
-	"let g:autocwd_repodirs = ['.git', '.hg', '.svn']
-"endif
+if !exists('g:autocwd_repodirs')
+	let g:autocwd_repodirs = ['.git', '.hg', '.svn']
+endif
 
 " commands
 command! AutoCWDPrint call autocwd#PrintWorkDirs()
@@ -53,7 +53,23 @@ def getWinName(bufname, buftype):
 		else:
 			winname = bufname
 	return winname
+
+def findRepoDirFrom(firstdir):
+	repodirs = vim.eval('g:autocwd_repodirs')
+	dir = firstdir
+	while True:
+		exist = False
+		for repodir in repodirs:
+			if os.path.exists(os.path.join(dir, repodir)):
+				return dir
+
+		prevdir = dir
+		dir = os.path.dirname(dir)
+		if dir==prevdir:
+			#print 'no repo dir in ancestors of %s'%firstdir
+			return ''
 EOF
+
 
 " functions
 function! s:OnEnterBuf()
@@ -97,10 +113,13 @@ patternwd_pairs = vim.eval('g:autocwd_patternwd_pairs')
 inpatternwd = False
 for pattern, wd in patternwd_pairs:
 	wd = vim.eval('expand(\'%s\')'%wd)
-	if fnmatch.fnmatch(filepath, pattern) and os.path.isdir(wd):
-		inpatternwd = True
-		vim.command('return [1, \'%s\']'%wd)
-		break
+	if fnmatch.fnmatch(filepath, pattern):
+		if '*REPO*' in wd:
+			wd = wd.replace('*REPO*', findRepoDirFrom(filepath))
+	   	if os.path.isdir(wd):
+			inpatternwd = True
+			vim.command('return [1, \'%s\']'%wd)
+			break
 if inpatternwd==False:
 	vim.command('return [0, g:autocwd_defaultwd]')
 EOF

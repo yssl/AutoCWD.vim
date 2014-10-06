@@ -30,20 +30,6 @@ def toWidthColMat(rowMat):
 			colMat[c][r] = len(rowMat[r][c])
 	return colMat
 
-def getWinName(bufname, buftype):
-	if bufname==None:
-		if len(buftype)>0:
-			winname = '[%s]'%buftype
-		else:
-			winname = '[No Name]'
-	else:
-		if len(buftype)>0:
-			winname = os.path.basename(bufname)
-			winname = '[%s] %s'%(buftype, winname)
-		else:
-			winname = bufname
-	return winname
-
 def ltrunc(s, width, prefix=''):
     if width >= len(s): prefix = ''
     return prefix+s[-width+len(prefix):]
@@ -61,10 +47,13 @@ patternwd_pairs = vim.eval('g:autocwd_patternwd_pairs')
 inpatternwd = False
 for pattern, wd in patternwd_pairs:
 	wd = vim.eval('expand(\'%s\')'%wd)
-	if fnmatch.fnmatch(filepath, pattern) and os.path.isdir(wd):
-		inpatternwd = True
-		vim.command('return \'%s\''%wd)
-		break
+	if fnmatch.fnmatch(filepath, pattern):
+		if '*REPO*' in wd:
+			wd = wd.replace('*REPO*', findRepoDirFrom(filepath))
+	   	if os.path.isdir(wd):
+			inpatternwd = True
+			vim.command('return \'%s\''%wd)
+			break
 if inpatternwd==False:
 	vim.command('return g:autocwd_defaultwd')
 EOF
@@ -78,10 +67,13 @@ patternwd_pairs = vim.eval('g:autocwd_patternwd_pairs')
 inpatternwd = False
 for pattern, wd in patternwd_pairs:
 	wd = vim.eval('expand(\'%s\')'%wd)
-	if fnmatch.fnmatch(filepath, pattern) and os.path.isdir(wd):
-		inpatternwd = True
-		vim.command('return \'%s\''%pattern)
-		break
+	if fnmatch.fnmatch(filepath, pattern):
+		if '*REPO*' in wd:
+			wd = wd.replace('*REPO*', findRepoDirFrom(filepath))
+	   	if os.path.isdir(wd):
+			inpatternwd = True
+			vim.command('return \'%s\''%pattern)
+			break
 if inpatternwd==False:
 	vim.command('return \'\'')
 EOF
