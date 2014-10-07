@@ -27,11 +27,26 @@ For example, '\*.vim' matches files with .vim extension and '\*/project1/\*' mat
 (Please refer https://docs.python.org/2/library/fnmatch.html for more information.
 *patterns* are processed by python's *fnmatch* function internally.)
 
-- *working_directory* will be the CWD when the corresponding *pattern* matches the current buffer.
+- *working_directory* will be the CWD when the corresponding *pattern* matches the current buffer.  
 It can be one of following types:
-	- absolute path (e.g., '~/test' changes the CWD to ~/test directory)  
-	- vim's file name modifier (e.g., '%:p:h' changes the CWD to the directory of the current buffer's file. Please refer http://vimdoc.sourceforge.net/htmldoc/cmdline.html#filename-modifiers for more information.)  
-	- relative path with special keyword '*REPO*'  
+
+	type | example:<br> working_directory | example:<br> CWD to be changed
+	--- | --- | ---
+	absolute path | '~/test' | ~/test
+	vim's file name modifier<sup>1</sup> | '%:p:h' | current file's directory
+	special keyword: \*REPO\* | '\*REPO\*/bin' | ~/code/bin<sup>2</sup>
+
+	- <sup>1</sup>Please refer http://vimdoc.sourceforge.net/htmldoc/cmdline.html#filename-modifiers for more information.  
+	- <sup>2</sup>\*REPO\* is replaced with the repository root directory that contains current file.  
+	The example directory structure is:
+	```
+	+-- ~/code 
+	|	+-- .git
+	|	+-- bin
+	|	+-- examples
+	|	|	+-- ex1
+	| 	|	|	+-- current file
+	```
 
 - If the current buffer matches one of the defined patterns, the CWD will be changed to the corresponding working directory.
 Otherwise, the default working directory that have been the CWD before applying `g:autocwd_patternwd_pairs` will be restored.  
