@@ -47,11 +47,11 @@ patterns are processed by python's fnmatch function internally.)
 urrent file path or buffer name.  
 It can be one of following types:
 
-	type                                 | example:<br> working_directory | example:<br> CWD to be changed
-	---                                  | ---                            | ---
-	absolute path                        | '~/test'                       | ~/test
-	vim's file name modifier (1)         | '%:p:h'                        | current file's directory
-	special keyword: '*REPO*'            | '*REPO*/bin'                 | ~/code/bin (2)
+	type                                 | example: working_directory | example: CWD to be changed
+	---                                  | ---                        | ---
+	absolute path                        | '~/test'                   | ~/test
+	vim's file name modifier (1)         | '%:p:h'                    | current file's directory
+	special keyword: '*REPO*'            | '*REPO*/bin'               | ~/code/bin (2)
 
 	(1) Please refer http://vimdoc.sourceforge.net/htmldoc/cmdline.html#filename-modifiers for more information.  
 	(2) '*REPO*' is replaced with the repository root directory that contains current file.  
