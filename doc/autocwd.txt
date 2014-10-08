@@ -137,4 +137,4 @@ Default: >
     - change the name to autocmd.vim from CWDPattern
 1.2.0                       2014/10/09
     - add special keyword '*REPO*' that can be used in predefined working_directory.
-	now you can set working directory to relative path from the repository directory.
+    now you can set working directory to relative path from the repository directory.
