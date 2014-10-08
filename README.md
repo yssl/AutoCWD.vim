@@ -1,8 +1,8 @@
 # autocwd.vim
 
-autocwd.vim automatically changes the current working directory (CWD) of vim when you change the current buffer.
-You can define patterns that be may included in a name or file path of a buffer, and their working directories in your .vimrc. 
-The predefined working directories can be the directory of the current buffer's file, absolute paths of specific directories, and so on.
+autocwd.vim automatically changes the current working directory (CWD) of vim when you change the current buffer (or window).
+You can define patterns that may be included in a file path or buffer name, and corresponding working directories in your .vimrc. 
+<!--The predefined working directories can be the directory of the current buffer's file, absolute paths of specific directories, and so on.-->
 
 This plugin requires a version of vim with python support.
 You can check your vim with `:echo has('python')`.
@@ -23,11 +23,11 @@ let g:autocwd_patternwd_pairs = [
 ```
 
 - *pattern* is a substring of a file path or buffer name with Unix shell-style wildcards.  
-For example, '\*.vim' matches files with .vim extension and '\*/project1/\*' matches files that contains 'project1' in their absolute file paths.  
+For example, '\*.vim' matches files with .vim extension and '\*/project1/\*' matches files that contains '/project1/' in their absolute file paths.  
 (Please refer https://docs.python.org/2/library/fnmatch.html for more information.
 *patterns* are processed by python's *fnmatch* function internally.)
 
-- *working_directory* will be the CWD when the corresponding *pattern* matches the current buffer.  
+- *working_directory* will be the CWD when the corresponding *pattern* matches the current file path or buffer name.  
 It can be one of following types:
 
 	type | example:<br> working_directory | example:<br> CWD to be changed
@@ -36,8 +36,8 @@ It can be one of following types:
 	vim's file name modifier<sup>1</sup> | '%:p:h' | current file's directory
 	special keyword: \*REPO\* | '\*REPO\*/bin' | ~/code/bin<sup>2</sup>
 
-	- <sup>1</sup>Please refer http://vimdoc.sourceforge.net/htmldoc/cmdline.html#filename-modifiers for more information.  
-	- <sup>2</sup>\*REPO\* is replaced with the repository root directory that contains current file.  
+	<sup>1</sup>Please refer http://vimdoc.sourceforge.net/htmldoc/cmdline.html#filename-modifiers for more information.  
+	<sup>2</sup>\*REPO\* is replaced with the repository root directory that contains current file.  
 	The example directory structure is:
 	```
 	+-- ~/code 
