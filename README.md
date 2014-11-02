@@ -21,6 +21,9 @@ Screenshot:
 - Manual install (not recommended)
     - Download this plugin and extract it in `~/.vim/`
 
+If your vim doesn't support python, the easiest solution for me was installing a more featured version of vim.  
+`sudo apt-get install vim-nox`
+
 ## Usage
 
 You can define patterns and working directories in your .vimrc as follows:
