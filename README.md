@@ -10,6 +10,17 @@ You can check your vim with `:echo has('python')`.
 Screenshot:
 ![cwdpattern](https://cloud.githubusercontent.com/assets/5915359/3622432/de3ce5c8-0e33-11e4-8a78-ff5d8bc33d92.png)
 
+## Installation
+
+- Using one of plugin managers (recommended)
+    - [Vundle](https://github.com/gmarik/Vundle.vim) : Add `Bundle 'yssl/autocwd.vim'` to .vimrc & `:BundleInstall`
+    - [NeoBundle](https://github.com/Shougo/neobundle.vim) : Add `NeoBundle 'yssl/autocwd.vim'` to .vimrc & `:NeoBundleInstall`
+    - [vim-plug](https://github.com/junegunn/vim-plug) : Add `Plug 'yssl/autocwd.vim'` to .vimrc & `:PlugInstall`
+- Using [Pathogen](https://github.com/tpope/vim-pathogen)
+    - `cd ~/.vim/bundle; git clone https://github.com/yssl/autocwd.vim.git`
+- Manual install (not recommended)
+    - Download this plugin and extract it in `~/.vim/`
+
 ## Usage
 
 You can define patterns and working directories in your .vimrc as follows:
