@@ -4,9 +4,6 @@ autocwd.vim automatically changes the current working directory (CWD) of vim whe
 You can define patterns that may be included in a file path or buffer name, and corresponding working directories in your .vimrc. 
 <!--The predefined working directories can be the directory of the current buffer's file, absolute paths of specific directories, and so on.-->
 
-This plugin requires a version of vim with python support.
-You can check your vim with `:echo has('python')`.
-
 Screenshot:
 ![cwdpattern](https://cloud.githubusercontent.com/assets/5915359/3622432/de3ce5c8-0e33-11e4-8a78-ff5d8bc33d92.png)
 
@@ -21,6 +18,7 @@ Screenshot:
 - Manual install (not recommended)
     - Download this plugin and extract it in `~/.vim/`
 
+This plugin requires a version of vim with python support. You can check your vim with `:echo has('python')`.
 If your vim doesn't support python, the easiest solution for me was installing a more featured version of vim.  
 `sudo apt-get install vim-nox`
 
