@@ -19,8 +19,7 @@ Screenshot:
     - Download this plugin and extract it in `~/.vim/`
 
 This plugin requires a version of vim with python support. You can check your vim with `:echo has('python')`.
-If your vim doesn't support python, the easiest solution for me was installing a more featured version of vim.  
-`sudo apt-get install vim-nox`
+If your vim doesn't support python, the easiest solution would be installing a more featured version of vim by `sudo apt-get install vim-nox`.
 
 ## Usage
 
