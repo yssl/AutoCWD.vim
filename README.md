@@ -20,7 +20,7 @@ Screenshot:
 
 This plugin requires a version of vim with python support. You can check your vim with `:echo has('python')`.
 If your vim doesn't support python, one of the easiest solutions would be installing a more featured version of vim by:  
-`sudo apt-get install vim-nox`.
+`sudo apt-get install vim-nox`
 
 ## Usage
 
