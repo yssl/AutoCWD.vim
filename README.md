@@ -9,7 +9,7 @@ Screenshot:
 
 ## Installation
 
-- Using one of plugin managers (recommended)
+- Using plugin managers (recommended)
     - [Vundle](https://github.com/gmarik/Vundle.vim) : Add `Bundle 'yssl/autocwd.vim'` to .vimrc & `:BundleInstall`
     - [NeoBundle](https://github.com/Shougo/neobundle.vim) : Add `NeoBundle 'yssl/autocwd.vim'` to .vimrc & `:NeoBundleInstall`
     - [vim-plug](https://github.com/junegunn/vim-plug) : Add `Plug 'yssl/autocwd.vim'` to .vimrc & `:PlugInstall`
@@ -19,7 +19,8 @@ Screenshot:
     - Download this plugin and extract it in `~/.vim/`
 
 This plugin requires a version of vim with python support. You can check your vim with `:echo has('python')`.
-If your vim doesn't support python, the easiest solution would be installing a more featured version of vim by `sudo apt-get install vim-nox`.
+If your vim doesn't support python, one of the easiest solutions would be installing a more featured version of vim by:  
+`sudo apt-get install vim-nox`.
 
 ## Usage
 
