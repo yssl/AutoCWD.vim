@@ -46,8 +46,8 @@ filepath = vim.eval('a:filepath')
 patternwd_pairs = vim.eval('g:autocwd_patternwd_pairs')
 inpatternwd = False
 for pattern, wd in patternwd_pairs:
-	wd = vim.eval('expand(\'%s\')'%wd)
 	if fnmatch.fnmatch(filepath, pattern):
+		wd = vim.eval('expand(\'%s\')'%wd)
 		if '*REPO*' in wd:
 			wd = wd.replace('*REPO*', findRepoDirFrom(filepath))
 	   	if os.path.isdir(wd):
@@ -66,8 +66,8 @@ filepath = vim.eval('a:filepath')
 patternwd_pairs = vim.eval('g:autocwd_patternwd_pairs')
 inpatternwd = False
 for pattern, wd in patternwd_pairs:
-	wd = vim.eval('expand(\'%s\')'%wd)
 	if fnmatch.fnmatch(filepath, pattern):
+		wd = vim.eval('expand(\'%s\')'%wd)
 		if '*REPO*' in wd:
 			wd = wd.replace('*REPO*', findRepoDirFrom(filepath))
 	   	if os.path.isdir(wd):
