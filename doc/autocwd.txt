@@ -51,19 +51,23 @@ It can be one of following types:
 	---                                  | ---                        | ---
 	absolute path                        | '~/test'                   | ~/test
 	vim's file name modifier (1)         | '%:p:h'                    | current file's directory
-	special keyword: '*REPO*'            | '*REPO*/bin'               | ~/code/bin (2)
+	special keyword                      | '*REPO*' (2)               | root directory of the repository containing current file
 
 	(1) Please refer http://vimdoc.sourceforge.net/htmldoc/cmdline.html#filename-modifiers for more information.  
-	(2) '*REPO*' is replaced with the repository root directory that contains current file.  
-	The example directory structure is:
-	```
-	+-- ~/code 
-	|	+-- .git
-	|	+-- bin
-	|	+-- examples
-	|	|	+-- ex1
-	| 	|	|	+-- current file
-	```
+	(2) '*REPO*' is replaced with the root directory of the repository containing current file.  
+	- Examples:  
+		If the directory structure looks like this:
+		```
+		+-- ~/code 
+		|	+-- bin
+		|	+-- examples
+		|	|	+-- .git
+		|	|	+-- ex1
+		| 	|	|	+-- current file
+		```
+	- '\*REPO\*' : ~/code/examples
+	- '\*REPO\*/ex1' : ~/code/examples/ex1
+	- '\*REPO\*/..' : ~/code
 
 - If the current buffer matches one of the defined patterns, the CWD will 
 be changed to the corresponding working directory.
