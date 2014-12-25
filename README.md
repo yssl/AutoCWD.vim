@@ -79,7 +79,7 @@ let g:autocwd_patternwd_pairs = [
 	\['*/vim74/*', '/home/testid/vim74'],
 	\['*/blender-2.68/*', '/home/testid/blender-2.68'],
 	\]
-```
+	```
 
 ## Commands
 
