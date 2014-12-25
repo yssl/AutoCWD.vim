@@ -53,16 +53,17 @@ It can be one of following types or their combinations:
 	- Examples:  
 		If the directory structure looks like this:
 		```
-	+-- ~/code 
-	|	+-- bin
-	|	+-- examples
-	|	|	+-- .git
-	|	|	+-- ex1
-	| 	|	|	+-- current file
-	```
+		+-- ~/code 
+		|	+-- bin
+		|	+-- examples
+		|	|	+-- .git
+		|	|	+-- ex1
+		| 	|	|	+-- current file
+		```
+		
 		- '\*REPO\*' : ~/code/examples
 		- '\*REPO\*/ex1' : ~/code/examples/ex1
-		- '\*REPO\*/..' : ~/code
+		- '\*REPO\*/..' : ~/code  
 
 - If the current buffer matches one of the defined patterns, the CWD will be changed to the corresponding working directory.
 Otherwise, the default working directory that have been the CWD before applying `g:autocwd_patternwd_pairs` will be restored.  
@@ -71,7 +72,7 @@ You can change the default working directory by `:cd` or other CWD-changing comm
 - The order of patterns in `g:autocwd_patternwd_pairs` is meaningful.
 If the current buffer matches both first and second patterns, the working directory corresponding to the first pattern will be the CWD.
 
-An example pattern-wd pairs for the screenshot:
+An example `g:autocwd_patternwd_pairs` pairs for the screenshot:
 ```
 let g:autocwd_patternwd_pairs = [
 	\['*.vim', '%:p:h'],
@@ -79,7 +80,7 @@ let g:autocwd_patternwd_pairs = [
 	\['*/vim74/*', '/home/testid/vim74'],
 	\['*/blender-2.68/*', '/home/testid/blender-2.68'],
 	\]
-	```
+```
 
 ## Commands
 
