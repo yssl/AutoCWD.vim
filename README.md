@@ -86,6 +86,7 @@ let g:autocwd_patternwd_pairs = [
 
 **:AutoCWDPrint**  
 Print the buffer name or file path, matched pattern, and working directory of windows in the current tab.
+You can jump to one of the listed windows by typing the index(#) of the window.
 
 There is no activation commands for autocwd.vim. 
 If you install this plugin, it will starts to manage the CWD.
