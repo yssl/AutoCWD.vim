@@ -52,7 +52,7 @@ for pattern, wd in patternwd_pairs:
 			wd = wd.replace('*REPO*', findRepoDirFrom(filepath))
 	   	if os.path.isdir(wd):
 			inpatternwd = True
-			vim.command('return \'%s\''%wd)
+			vim.command('return \'%s\''%os.path.abspath(wd))
 			break
 if inpatternwd==False:
 	vim.command('return g:autocwd_defaultwd')
