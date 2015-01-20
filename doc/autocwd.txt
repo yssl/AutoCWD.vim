@@ -145,3 +145,5 @@ Default: >
     now you can set working directory to relative path from the repository directory.
 1.3.0                       2014/12/28
     - add window selecting prompt to AutoCMDPrint command
+1.3.1                       2015/01/21
+    - Print working directory in absolute path
