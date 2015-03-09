@@ -81,7 +81,7 @@ function! s:OnEnterBuf()
 	let buftype = getbufvar(winbufnr(winnr()), '&buftype')
 
 	let wd = s:ExistPattern(bufname, buftype)[1]
-	execute 'cd' wd
+	execute 'cd' fnameescape(wd)
 endfunction
 
 function! s:OnLeaveBuf()
