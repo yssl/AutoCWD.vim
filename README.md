@@ -1,6 +1,6 @@
-# autocwd.vim
+# AutoCWD.vim
 
-autocwd.vim automatically changes the current working directory (CWD) of vim when you change the current buffer (or window).
+AutoCWD.vim automatically changes the current working directory (CWD) of vim when you change the current buffer (or window).
 You can define patterns that may be included in a file path or buffer name, and corresponding working directories in your .vimrc. 
 <!--The predefined working directories can be the directory of the current buffer's file, absolute paths of specific directories, and so on.-->
 
@@ -10,11 +10,11 @@ Screenshot:
 ## Installation
 
 - Using plugin managers (recommended)
-    - [Vundle](https://github.com/gmarik/Vundle.vim) : Add `Bundle 'yssl/autocwd.vim'` to .vimrc & `:BundleInstall`
-    - [NeoBundle](https://github.com/Shougo/neobundle.vim) : Add `NeoBundle 'yssl/autocwd.vim'` to .vimrc & `:NeoBundleInstall`
-    - [vim-plug](https://github.com/junegunn/vim-plug) : Add `Plug 'yssl/autocwd.vim'` to .vimrc & `:PlugInstall`
+    - [Vundle](https://github.com/gmarik/Vundle.vim) : Add `Bundle 'yssl/AutoCWD.vim'` to .vimrc & `:BundleInstall`
+    - [NeoBundle](https://github.com/Shougo/neobundle.vim) : Add `NeoBundle 'yssl/AutoCWD.vim'` to .vimrc & `:NeoBundleInstall`
+    - [vim-plug](https://github.com/junegunn/vim-plug) : Add `Plug 'yssl/AutoCWD.vim'` to .vimrc & `:PlugInstall`
 - Using [Pathogen](https://github.com/tpope/vim-pathogen)
-    - `cd ~/.vim/bundle; git clone https://github.com/yssl/autocwd.vim.git`
+    - `cd ~/.vim/bundle; git clone https://github.com/yssl/AutoCWD.vim.git`
 - Manual install (not recommended)
     - Download this plugin and extract it in `~/.vim/`
 
@@ -88,7 +88,7 @@ let g:autocwd_patternwd_pairs = [
 Print the buffer name or file path, matched pattern, and working directory of windows in the current tab.
 You can jump to one of the listed windows by typing the index(#) of the window.
 
-There is no activation commands for autocwd.vim. 
+There is no activation commands for AutoCWD.vim. 
 If you install this plugin, it will starts to manage the CWD.
 
 ## Motivation
@@ -97,5 +97,5 @@ It is quite useful to set the CWD for each opened file in vim.
 Vim provides `:lcd` command for this purpose. 
 However, it cannot deal with opening other files in the same window because `:lcd` is applied to a specific window, not buffer.  
 
-autocwd.vim is designed to solve this problem.
+AutoCWD.vim is designed to solve this problem.
 Moreover, it provides more convenient way to set CWDs with Unix shell-style patterns.
