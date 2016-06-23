@@ -112,10 +112,10 @@ filepath = getWinName(bufname, buftype)
 patternwd_pairs = vim.eval('g:autocwd_patternwd_pairs')
 inpatternwd = False
 for pattern, wd in patternwd_pairs:
-	wd = vim.eval('expand(\'%s\')'%wd)
 	if fnmatch.fnmatch(filepath, pattern):
 		if '*REPO*' in wd:
 			wd = wd.replace('*REPO*', findRepoDirFrom(filepath))
+		wd = vim.eval('expand(\'%s\')'%wd)
 	   	if os.path.isdir(wd):
 			inpatternwd = True
 			vim.command('return [1, \'%s\']'%wd)
