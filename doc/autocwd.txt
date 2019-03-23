@@ -21,8 +21,8 @@ when you change the current buffer (or window).
 You can define patterns that may be included in a file path or buffer name,
  and corresponding working directories in your .vimrc. 
 
-This plugin requires a version of vim with python support.
-You can check your vim with `:echo has('python')`.
+This plugin requires a version of vim with Python 2 (+python) or Python 3 (+python3) 
+support. You can check your vim with `:echo has('python')` or `:echo has('python3')`.
 
 ==============================================================================
 2. Usage                                                    *autocwd-usage*

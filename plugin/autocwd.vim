@@ -1,7 +1,7 @@
 " File:         plugin/autocwd.vim
-" Description:  Auto current working directory update system
+" Description:  Automatic CWD(current working directory) updating system
 " Author:       yssl <http://github.com/yssl>
-" License:      
+" License:      MIT License
 
 if exists("g:loaded_autocwd") || &cp
 	finish
@@ -10,6 +10,14 @@ let g:loaded_autocwd	= 1
 let s:keepcpo           = &cpo
 set cpo&vim
 """""""""""""""""""""""""""""""""""""""""""""
+
+" vim version checking
+if !has('python3') && !has('python')
+	echohl WarningMsg
+	echomsg 'AutoCWD.vim unavailable: requires vim with Python support'
+	echohl None
+	finish
+endif
 
 " global variables
 if !exists('g:autocwd_patternwd_pairs')
@@ -35,8 +43,19 @@ augroup AutoCWDAutoCmds
 	autocmd BufLeave * call s:OnLeaveBuf() 
 augroup END
 
+" Support for Python3 and Python2
+" from https://github.com/Valloric/YouCompleteMe
+function! s:UsingPython3()
+	if has('python3')
+		return 1
+	endif
+	return 0
+endfunction
+let s:using_python3 = s:UsingPython3()
+let s:pythonX_until_EOF = s:using_python3 ? "python3 << EOF" : "python << EOF"
+
 " initialize python 
-python << EOF
+exec s:pythonX_until_EOF
 import vim
 import os, fnmatch
 
@@ -105,7 +124,7 @@ function! s:OnLeaveBuf()
 endfunction
 
 function! s:ExistPattern(bufname, buftype)
-python << EOF
+exec s:pythonX_until_EOF
 bufname = vim.eval('a:bufname')
 buftype = vim.eval('a:buftype')
 filepath = getWinName(bufname, buftype)
@@ -116,7 +135,7 @@ for pattern, wd in patternwd_pairs:
 		if '*REPO*' in wd:
 			wd = wd.replace('*REPO*', findRepoDirFrom(filepath))
 		wd = vim.eval('expand(\'%s\')'%wd)
-	   	if os.path.isdir(wd):
+		if os.path.isdir(wd):
 			inpatternwd = True
 			vim.command('return [1, \'%s\']'%wd)
 			break

@@ -1,7 +1,5 @@
 # AutoCWD.vim
 
-*Currently, this plugin only supports the vim compiled with python 2 support (+python).*
-
 AutoCWD.vim automatically changes the current working directory (CWD) of vim when you change the current buffer (or window).
 You can define patterns that may be included in a file path or buffer name, and corresponding working directories in your .vimrc. 
 <!--The predefined working directories can be the directory of the current buffer's file, absolute paths of specific directories, and so on.-->
@@ -20,8 +18,10 @@ Screenshot:
 - Manual install (not recommended)
     - Download this plugin and extract it in `~/.vim/`
 
-This plugin requires a version of vim with python support. You can check your vim with `:echo has('python')`.
-- Linux: If your vim doesn't support python, one of the easiest solutions would be installing a more featured version of vim by `sudo apt-get install vim-gtk-py2`.
+## Requirements
+
+This plugin requires a version of vim with Python 2 (+python) or Python 3 (+python3) support. You can check your vim with `:echo has('python')` or `:echo has('python3')`.
+- Ubuntu: If your vim doesn't support python, one of the easiest solutions would be installing a more featured version of vim by `sudo apt-get install vim-gtk`.
 - Windows: gvim for Windows is already equipped with python support.
 
 ## Usage

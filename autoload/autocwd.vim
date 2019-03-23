@@ -1,7 +1,7 @@
 " File:         autoload/autocwd.vim
-" Description:  Auto current working directory update system
+" Description:  Automatic CWD(current working directory) updating system
 " Author:       yssl <http://github.com/yssl>
-" License:      
+" License:      MIT License
 
 " wrappers
 function! autocwd#PrintWorkDirs()
@@ -10,8 +10,19 @@ endfunction
 
 " script variables
 
+" Support for Python3 and Python2
+" from https://github.com/Valloric/YouCompleteMe
+function! s:UsingPython3()
+	if has('python3')
+		return 1
+	endif
+	return 0
+endfunction
+let s:using_python3 = s:UsingPython3()
+let s:pythonX_until_EOF = s:using_python3 ? "python3 << EOF" : "python << EOF"
+
 " initialize python 
-python << EOF
+exec s:pythonX_until_EOF
 import vim
 import fnmatch
 
@@ -31,17 +42,17 @@ def toWidthColMat(rowMat):
 	return colMat
 
 def ltrunc(s, width, prefix=''):
-    if width >= len(s): prefix = ''
-    return prefix+s[-width+len(prefix):]
-    
+	if width >= len(s): prefix = ''
+	return prefix+s[-width+len(prefix):]
+	
 def rtrunc(s, width, postfix=''):
-    if width >= len(s): postfix = ''
-    return s[:width-len(postfix)]+postfix
+	if width >= len(s): postfix = ''
+	return s[:width-len(postfix)]+postfix
 EOF
 
 " functions
 function! s:GetWorkDir(filepath)
-python << EOF
+exec s:pythonX_until_EOF
 filepath = vim.eval('a:filepath')
 patternwd_pairs = vim.eval('g:autocwd_patternwd_pairs')
 inpatternwd = False
@@ -50,7 +61,7 @@ for pattern, wd in patternwd_pairs:
 		if '*REPO*' in wd:
 			wd = wd.replace('*REPO*', findRepoDirFrom(filepath))
 		wd = vim.eval('expand(\'%s\')'%wd)
-	   	if os.path.isdir(wd):
+		if os.path.isdir(wd):
 			inpatternwd = True
 			vim.command('return \'%s\''%os.path.abspath(wd))
 			break
@@ -60,7 +71,7 @@ EOF
 endfunction
 
 function! s:GetWorkDirPattern(filepath)
-python << EOF
+exec s:pythonX_until_EOF
 import fnmatch
 filepath = vim.eval('a:filepath')
 patternwd_pairs = vim.eval('g:autocwd_patternwd_pairs')
@@ -70,7 +81,7 @@ for pattern, wd in patternwd_pairs:
 		if '*REPO*' in wd:
 			wd = wd.replace('*REPO*', findRepoDirFrom(filepath))
 		wd = vim.eval('expand(\'%s\')'%wd)
-	   	if os.path.isdir(wd):
+		if os.path.isdir(wd):
 			inpatternwd = True
 			vim.command('return \'%s\''%pattern)
 			break
@@ -80,7 +91,7 @@ EOF
 endfunction
 
 function! s:BuildAllWinPropMat(propTypes)
-python << EOF
+exec s:pythonX_until_EOF
 vim.command('let mat = []')
 curwin = vim.current.window
 curwin_r = 0
@@ -112,7 +123,7 @@ for r in range(len(vim.windows)):
 
 		elif type=='workdir':
 			dir = vim.eval('s:GetWorkDir(\'%s\')'%getWinName(bufname, buftype))
-			#print '|%s|%s|%s|'%(bufname,buftype,dir)
+			#print('|%s|%s|%s|'%(bufname,buftype,dir))
 			vim.command('call add(mat[-1], \'%s\')'%dir)
 
 		elif type=='workdir_pattern':
@@ -126,7 +137,7 @@ endfunction
 
 function! s:PrintWorkDirs()
 	let a:type = 'workdir'
-python << EOF
+exec s:pythonX_until_EOF
 vim.command('let propTypes = ["iscurwin", "winnr", "winname", "workdir_pattern", "workdir"]')
 wpMat = vim.eval('s:BuildAllWinPropMat(propTypes)')
 propTypes = vim.eval('propTypes')
@@ -178,6 +189,5 @@ if user_input.isdigit():
 	winnum = int(vim.eval('winnr("$")'))
 	if winidx<=winnum:
 		vim.command('%dwincmd w'%winidx)
-
 EOF
 endfunction
